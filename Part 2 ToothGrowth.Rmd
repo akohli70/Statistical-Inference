@@ -1,0 +1,140 @@
+---
+title: "Statistical Inference Course Project - Part 2"
+author: "Amit Kohli"
+date: "February 12, 2016"
+output: pdf_document
+fontsize: 10pt
+geometry: margin=1in
+---
+
+```{r prepare_environment, echo=FALSE}
+setwd("~/datasciencecoursera/Statistical Inference/Course Project")
+library(ggplot2)
+library(knitr)
+library(datasets)
+opts_chunk$set(results = 'hold',fig.path = 'figure/')
+```
+
+#Overview:
+The reports investigates the ToothGrowth data in the R datasets package by loading the ToothGrowth data and performing some basic exploratory data analyses.  The report provides a basic summary of the data and uses confidence intervals to compare tooth growth by supplement and dose.
+
+# 1. Load the ToothGrowth data and perform some basic exploratory data analyses
+```{r, results='asis', echo=FALSE}
+data(ToothGrowth)
+```
+
+***Number of Rows***
+```{r, echo=FALSE}
+nrow(ToothGrowth)
+```
+
+***Number of Columns***
+```{r, echo=FALSE}
+ncol(ToothGrowth)
+```
+
+***Display Structure of the ToothGrowth Dataset***
+```{r, echo=FALSE}
+str(ToothGrowth)
+```
+
+***Display Header of the dataset***
+```{r,echo=FALSE}
+knitr::kable(head(ToothGrowth))
+```
+
+***Disaplay Unique Dose values***
+```{r,echo=FALSE}
+unique(ToothGrowth$dose)
+```
+
+The ToothGrowth dataset has 3 columns and 60 rows. The response is the length of tooth growth in 60 guinea pigs. Each animal received one of three dose levels of Vitamin C and Orange Juice (0.5, 1, and 2 mg/day). There are two factors for supplement: “OJ” and “VC” -- and there are three unique dosage values: "0.5", "1.0", and "2.0" based on the exploratory analysis above.
+
+The plot below visualizes the ToothGrowth data -- side-by-side comparison of both supplements.
+
+```{r exp_analysis, echo=FALSE}
+grid_names <- as_labeller(c('OJ' = "Orange Juice",'VC' = "Vitamin C"))
+plot <- ggplot(ToothGrowth, 
+               aes(x=factor(dose),y=len,fill=factor(dose)))
+plot + geom_boxplot(notch=F) + facet_grid(.~supp, labeller = grid_names) +
+  scale_x_discrete("Dosage (mg)") +   
+  scale_y_continuous("Length of Teeth") +  
+  ggtitle("Exploratory Data Analyses")
+```
+
+# 2. Provide a basic summary of the data
+```{r,echo=FALSE}
+ToothGrowth$dose <- as.factor(ToothGrowth$dose)
+summary(ToothGrowth)
+```
+
+Summary of data by Supplement
+```{r,echo=FALSE}
+ by(ToothGrowth$len, INDICES = ToothGrowth$supp, summary)
+```
+
+Summary of data by Dosage
+```{r,echo=FALSE}
+ by(ToothGrowth$len, INDICES = ToothGrowth$dose, summary)
+```
+
+# 3. Use confidence intervals and/or hypothesis tests to compare tooth growth by supp and dose.
+```{r, echo=FALSE}
+supplement1 <- t.test(len~supp, paired=F, var.equal=T, data=ToothGrowth)
+supplement2 <- t.test(len~supp, paired=F, var.equal=F, data=ToothGrowth)
+confResult <- data.frame("p-value"=c(supplement1$p.value, supplement2$p.value),
+                          "Conf-Low"=c(supplement1$conf[1],supplement2$conf[1]),
+                          "Conf-High"=c(supplement1$conf[2],supplement2$conf[2]),
+                          row.names=c("Equal Var","Unequal Var"))
+confResult
+```
+The confidence results above allow for the rejection of the null hypothesis and a confirmation that there is a significant correlation between tooth length and supplement dose levels.
+
+# 4. State your conclusions and the assumptions needed for your conclusions.
+Based on the analysis above, there is definitive evidence that small dosages (0.5 and 1.0) of orange juice is more effective than Vitamin C in tooth growth. Although the results of higher dosage (2.0) is overall better than small dosage, the results are inconclusive between which supplement is better.
+
+***Assumptions: *** 1) The population are independent, the variances between populations are different and a random population was used; 2) The population was comprised of similar guinea pigs and measurement error was accounted for with significant digits; 3) For the populations to be independent, 60 guinea pigs were used so each combination of dose level and delivery method were not affected by the other methods.
+
+\pagebreak
+\begin{center}
+Appendix
+\end{center}
+
+# Code for loading the ToothGrowth data and performing basic exploratory data analyses
+```{r, results='asis', eval=FALSE}
+data(ToothGrowth)
+
+nrow(ToothGrowth)
+ncol(ToothGrowth)
+str(ToothGrowth)
+knitr::kable(head(ToothGrowth))
+unique(ToothGrowth$dose)
+
+grid_names <- as_labeller(c('OJ' = "Orange Juice",'VC' = "Vitamin C"))
+plot <- ggplot(ToothGrowth, 
+               aes(x=factor(dose),y=len,fill=factor(dose)))
+plot + geom_boxplot(notch=F) + facet_grid(.~supp, labeller = grid_names) +
+  scale_x_discrete("Dosage (mg)") +   
+  scale_y_continuous("Length of Teeth") +  
+  ggtitle("Exploratory Data Analyses")
+```
+
+# Code for providing a basic summary of the data
+```{r,eval=FALSE}
+ToothGrowth$dose <- as.factor(ToothGrowth$dose)
+summary(ToothGrowth)
+
+ by(ToothGrowth$len, INDICES = ToothGrowth$supp, summary)
+ by(ToothGrowth$len, INDICES = ToothGrowth$dose, summary)
+```
+
+# Code for # using confidence intervals to compare tooth growth by supplement and dose
+```{r, eval=FALSE}
+supplement1 <- t.test(len~supp, paired=F, var.equal=T, data=ToothGrowth)
+supplement2 <- t.test(len~supp, paired=F, var.equal=F, data=ToothGrowth)
+confResult <- data.frame("p-value"=c(supplement1$p.value, supplement2$p.value),
+                          "Conf-Low"=c(supplement1$conf[1],supplement2$conf[1]),
+                          "Conf-High"=c(supplement1$conf[2],supplement2$conf[2]),
+                          row.names=c("Equal Var","Unequal Var"))
+confResult
+```
