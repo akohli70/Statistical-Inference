@@ -128,7 +128,7 @@ summary(ToothGrowth)
  by(ToothGrowth$len, INDICES = ToothGrowth$dose, summary)
 ```
 
-# Code for # using confidence intervals to compare tooth growth by supplement and dose
+# Code for using confidence intervals to compare tooth growth by supplement and dose
 ```{r, eval=FALSE}
 supplement1 <- t.test(len~supp, paired=F, var.equal=T, data=ToothGrowth)
 supplement2 <- t.test(len~supp, paired=F, var.equal=F, data=ToothGrowth)

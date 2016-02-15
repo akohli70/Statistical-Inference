@@ -16,10 +16,10 @@ opts_chunk$set(results = 'hold',fig.path = 'figure/')
 
 
 # Overview:
-This reports investigates the exponential distribution in R and compares it with the Central Limit Theorem. The report comprises of a simulation exercises to explore the properties of the distribution of averages of 40 exponentials.  The sample and theoritical mean and variance are compared to those of theoretical, and it is concluded that the distribution is approximately normal.
+This reports investigates the exponential distribution in R and compares it with the Central Limit Theorem. The report comprises of a simulation exercises to explore the properties of the distribution of averages of 40 exponential.  The sample and theoretical mean and variance are compared to those of theoretical, and it is concluded that the distribution is approximately normal.
 
 # Simulations:
-The exponential distribution is simulated in R with rexp(n, lambda) where lambda is the rate parameter, where both the mean and standard deviation of the distribution are 1/lambda. Lambda is set to 0.2 for all of the simulations in which the distribution of averages of 40 exponentials with 1000 simulations are investigated. In this section, we first set the seed (Februray 3, 2016), lambda (0.2), and exponential size (40). Iterating results over 1000 times, the rexp function is used to find averages. The Histogram below shows mean of 1000 random exponentials.
+The exponential distribution is simulated in R with rexp(n, lambda) where lambda is the rate parameter, where both the mean and standard deviation of the distribution are 1/lambda. Lambda is set to 0.2 for all of the simulations in which the distribution of averages of 40 exponential with 1000 simulations are investigated. In this section, we first set the seed (February 3, 2016), lambda (0.2), and exponential size (40). Iterating results over 1000 times, the rexp function is used to find averages. The Histogram below shows mean of 1000 random exponential.
 
 ```{r run_simulation, echo=FALSE,fig.height=4}
 set.seed(20160203)
@@ -66,7 +66,7 @@ hist(variance,
 abline(v= sample_var, col="red",lwd= 5)
 ```
 
-*Conclusion:* It is observable in the graph that the sample variance is very close to the theoritical variance.
+*Conclusion:* It is observable in the graph that the sample variance is very close to the theoretical variance.
 
 ```{r sampleVar_matrix, echo=FALSE}
 matrix(data=c(theo_var, sample_var), nrow=1, ncol=2, byrow=TRUE, 
@@ -74,7 +74,7 @@ matrix(data=c(theo_var, sample_var), nrow=1, ncol=2, byrow=TRUE,
 ```
 
 # Distribution:
-To answer the third question for investigating whether the distibution looks approximately like normal distribution, two different simulations are run and corresponding graphs are plotted. The first graph shows the distrbution of 1000 random expnoentilas, and the second graph shows the everage of 1000 simulations of 40 exponentials as follws.
+To answer the third question for investigating whether the distribution looks approximately like normal distribution, two different simulations are run and corresponding graphs are plotted. The first graph shows the distribution of 1000 random exponential, and the second graph shows the average of 1000 simulations of 40 exponential as follows.
 
 ```{r distribution_plot, echo=FALSE,fig.height=4}
 x <- runif(1000)
@@ -97,9 +97,9 @@ abline(v=mean(means),col="red",lwd=2)
 lines(x_fit, y_fit,col="blue",lwd=4)
 ```
 
-*Conclusion:* As it can be seen in the last two diagrams, both graphs have similar sample-means around the middle of the plot. However, the average of 40 exponentials for a large number of simulations (corresponding to the right-side plot) looks like normal distribution while the collection of random unifroms (left-side graph) looks different from a normal distribution.
+*Conclusion:* As it can be seen in the last two diagrams, both graphs have similar sample-means around the middle of the plot. However, the average of 40 exponential for a large number of simulations (corresponding to the right-side plot) looks like normal distribution while the collection of random uniforms (left-side graph) looks different from a normal distribution.
 
-This simulation confirms the Central Limit Theorem (CLT), as the distribution of averages of a distribution behaves like a normal distibution for the sufficiently large smaple sizes.
+This simulation confirms the Central Limit Theorem (CLT), as the distribution of averages of a distribution behaves like a normal distribution for the sufficiently large sample sizes.
 
 \pagebreak
 \begin{center}
@@ -118,6 +118,7 @@ for (i in 1:1000) means = c(means, mean(rexp(size, lambda)))
 for (i in 1:1000) variance = c(variance, var(rexp(size, lambda)))
 hist(means,breaks=50)
 ```
+
 # Code for Sample Mean versus Theoretical Mean:
 ```{r eval=FALSE}
 sample_mean <- round(mean(means), 2)
