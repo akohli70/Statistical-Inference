@@ -166,3 +166,5 @@ y_fit<-y_fit*diff(hg$mids[1:2])*length(means)
 abline(v=mean(means),col="red",lwd=2)
 lines(x_fit, y_fit,col="blue",lwd=4)
 ```
+
+<td>[GitHub Repo](https://github.com/akohli70/Statistical-Inference/blob/master/Part%201%20Simulation.Rmd)</td>

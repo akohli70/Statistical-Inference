@@ -138,3 +138,5 @@ confResult <- data.frame("p-value"=c(supplement1$p.value, supplement2$p.value),
                           row.names=c("Equal Var","Unequal Var"))
 confResult
 ```
+
+<td>[GitHub Repo](https://github.com/akohli70/Statistical-Inference/blob/master/Part%202%20ToothGrowth.Rmd)</td>
